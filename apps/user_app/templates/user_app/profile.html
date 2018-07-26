@@ -2,10 +2,30 @@
 <html lang="en" dir="ltr">
    <head>
       <meta charset="utf-8">
-      <title></title>
+      <title>Profile</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      {% load static %}
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="{% static 'user_app/css/style.css' %}">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
    </head>
    <body>
       <h1>User Profile</h1>
-      <a href="/user/logout" data-method="delete">Logout</a>
+      <a href="/user/logout" data-method="delete" class="btn">Logout</a>
+      <a href="/business" class="btn">Create Business</a>
+
+      {% for biz in business %}
+         <p>Name: <a href="/business/show/{{ biz.id }}">{{ biz.name }}</a></p>
+         <p>Owner: {{ biz.user.name }}</p>
+         <p>Address:{{ biz.address }}, {{ biz.location.city }}, {{ biz.location.state }}</p>
+         <p>Number: {{ biz.number }}</p>
+         <p>Category: {{ biz.search.category }}</p>
+         <p>Description: {{ biz.description }}</p>
+         <hr>
+      {% endfor %}
    </body>
 </html>

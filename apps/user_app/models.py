@@ -3,6 +3,9 @@ import bcrypt
 from django.db import models
 from ..search_app.models import Location
 
+
+
+
 class UserManager(models.Manager):
 
     def currentUser(self, request):
@@ -49,7 +52,7 @@ class UserManager(models.Manager):
         if len(form_data['password'])==0:
             errors.append('Password is Required.')
 
-        return errors    
+        return errors
 
 
 
@@ -57,7 +60,7 @@ class User(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
     password = models.CharField(max_length=100)
-    location = models.ForeignKey(Location, related_name='user_location')
+    location = models.ForeignKey(Location, related_name='user_location', null='TRUE', blank='TRUE')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects=UserManager()

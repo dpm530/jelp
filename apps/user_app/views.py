@@ -1,9 +1,9 @@
 from django.shortcuts import render, HttpResponse, redirect
-from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.db.models import Count
 from .models import User
 from ..search_app.models import Location
+from ..business_app.models import Business
 import bcrypt
 
 def flashErrors(request,errors):
@@ -32,8 +32,16 @@ def signup(request):
     return redirect('/user/newUser')
 
 def profile(request):
+    current_user=User.objects.currentUser(request)
+    business=Business.objects.all().order_by('-created_at')
 
-    return render(request,'user_app/profile.html')
+    context = {
+        'user': current_user,
+        'business':business,
+    }
+
+
+    return render(request,'user_app/profile.html', context)
 
 def login(request):
     if request.method=='POST':
