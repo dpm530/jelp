@@ -41,6 +41,16 @@ class UserManager(models.Manager):
 
         return user
 
+    def validateLogin(self,form_data):
+        errors=[]
+
+        if len(form_data['email'])==0:
+            errors.append('Email is Required.')
+        if len(form_data['password'])==0:
+            errors.append('Password is Required.')
+
+        return errors    
+
 
 
 class User(models.Model):

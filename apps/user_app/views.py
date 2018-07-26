@@ -6,9 +6,12 @@ from .models import User
 from ..search_app.models import Location
 import bcrypt
 
+def flashErrors(request,errors):
+    for error in errors:
+        messages.error(request,error)
+
 def index(request):
     return render(request,'user_app/index.html')
-
 
 def newUser(request):
     return render(request,'user_app/newUser.html')
@@ -23,7 +26,38 @@ def signup(request):
 
             request.session['user_id']=user.id
 
-            return redirect('/business')
+            return redirect('/user/profile')
 
         flashErrors(request,errors)
-    return redirect('/user/signup')
+    return redirect('/user/newUser')
+
+def profile(request):
+
+    return render(request,'user_app/profile.html')
+
+def login(request):
+    if request.method=='POST':
+        errors=User.objects.validateLogin(request.POST)
+        if not errors:
+            user=User.objects.filter(email=request.POST['email']).first()
+
+            if user:
+                password=str(request.POST['password'])
+                user_password=str(user.password)
+
+                hashed_pw=bcrypt.hashpw(password,user_password)
+
+                if hashed_pw==user_password:
+                    request.session['user_id']=user.id
+
+                    return redirect('/user/profile')
+
+            errors.append('Invalid account Information')
+        flashErrors(request,errors)
+
+    return redirect('/user')
+
+def logout(request):
+    if 'user_id' in request.session:
+        request.session.pop('user_id')
+    return redirect('/')
