@@ -2,6 +2,7 @@ body {
   font-size: 20px;
   color: #212529;
   font-family: 'Lora', 'Times New Roman', serif;
+  background-color:red;
 }
 p {
   line-height: 1.5;
@@ -137,16 +138,16 @@ header.masthead .post-heading .meta {
 header.masthead .post-heading .meta a {
   color: #fff;
 }
-
-footer {
-  padding: 50px 0 65px;
+footer{
+   background-color: #f5f5f5;
+   padding:20px;
+   line-height:2;
+   border-top: 1px solid #ccc;
 }
-
-footer .list-inline {
-  margin: 0;
-  padding: 0;
+footer p{
+   color:#d32424;
+   font-weight: bold;
 }
-
 footer .copyright {
   font-size: 14px;
   margin-bottom: 0;

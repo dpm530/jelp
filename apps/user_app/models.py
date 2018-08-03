@@ -33,7 +33,7 @@ class UserManager(models.Manager):
         location=Location.objects.existsorcreate(form_data)
         location_object=Location.objects.get(id=location.id)
         password=str(form_data['password'])
-        hashed_pw=bcrypt.hashpw(password, bcrypt.gensalt())
+        hashed_pw=bcrypt.hashpw(password.encode(), bcrypt.gensalt())
 
         user=User.objects.create(
             name=form_data['name'],

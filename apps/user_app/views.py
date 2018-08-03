@@ -21,7 +21,6 @@ def signup(request):
         errors=User.objects.validateUser(request.POST)
 
         if not errors:
-            print 'Create User'
             user=User.objects.createUser(request.POST,)
 
             request.session['user_id']=user.id
@@ -50,8 +49,8 @@ def login(request):
             user=User.objects.filter(email=request.POST['email']).first()
 
             if user:
-                password=str(request.POST['password'])
-                user_password=str(user.password)
+                password=(str(request.POST['password'])).encode()
+                user_password=(str(user.password)).encode()
 
                 hashed_pw=bcrypt.hashpw(password,user_password)
 
