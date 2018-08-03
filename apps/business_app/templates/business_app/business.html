@@ -7,11 +7,12 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       {% load static %}
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-      <link rel="stylesheet" href="{% static 'user_app/css/style.css' %}">
+      <link rel="stylesheet" href="{% static 'business_app/css/style.css' %}">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
    </head>
    <body>
       {% if messages %}
@@ -25,50 +26,151 @@
          {% endfor %}
       {% endif %}
 
-
-      <div class="page-header">
-         <h1>Business Page</h1>
-      </div>
-      <a href="/user/profile">Home</a>
-      <p>Name: {{ business.name }}</p>
-      <p>Address: {{ business.address }}</p>
-      <p>{{ business.location.city }}, {{ business.location.state }}</p>
-      <p>Description: {{ business.description }}</p>
-      <p>Category: {{ business.search.category }}</p>
-      <p>Owner: {{ business.user.name }}</p>
-      <div class="page-header">
-         <h1>Reviews:</h1>
-      </div>
-      {% for review in reviews %}
-         <h3>{{ review.user.name }} says:</h3>
-         <p>{{ review.comment }}</p>
-         <p>{{ review.rating }}</p>
-      {% endfor %}
-
-      <div class="page-header">
-         <h1>Write a Review</h1>
-      </div>
-      <form action="/business/createReview/{{ business.id }}" method="post">
-         {% csrf_token %}
-
-         <div class="form-group">
-            <label for="rating">Rating:</label>
-            <select class="form-control" id="rating" name="rating">
-               <option>5</option>
-               <option>4</option>
-               <option>3</option>
-               <option>2</option>
-               <option>1</option>
-            </select>
+      <nav class="navbar navbar-expand-lg navbar-light" id="navbar">
+         <div class="container">
+            <a class="navbar-brand" href="index.html">Jelp</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+               Menu
+               <i class="fa fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+               <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                     <a class="nav-link" href="/business">Create a Business</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="/user/profile">Home</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="/user/logout" data-method="delete">Logout</a>
+                  </li>
+               </ul>
+            </div>
          </div>
+      </nav><br>
 
-         <div class="form-group">
-            <label for="comment">Content:</label>
-            <textarea name="comment" id="comment" class="form-control" rows="8" cols="80"></textarea>
+      <div class="container">
+         <div class="page-header text-center">
+            <h1>{{ business.name }}</h1>
+            <a href="">{{ business.search.category }}</a>
+         </div><br><br>
+         <div class="row">
+            <div class="col-2"></div>
+            <div class="col-4">
+               <p>Owner: {{ business.user.name }}</p>
+               <p>Number: {{ business.number }} </p>
+               <p>Address:</p>
+               <p> {{ business.address }}</p>
+               <p>{{ business.location.city }}, {{ business.location.state }}</p>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-4">
+               <h5>Description:</h5>
+               <p>{{ business.description }}</p>
+            </div>
          </div>
+      </div><br>
 
-         <button type="sumbit" class="btn btn-danger">Create</button>
+      <hr><br>
 
-      </form>
+      <div class="container">
+         <h1>Reviews:</h1><br>
+         <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+               {% for review in reviews %}
+                  <h3>{{ review.user.name }} says:</h3>
+                  <p>{{ review.rating }} stars</p>
+                  <p>{{ review.comment }}</p>
+               {% endfor %}
+            </div>
+            <div class="col-2"></div>
+         </div>
+      </div><br>
+
+      <div class="container">
+         <h1>Write a Review:</h1><br>
+         <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+               <form action="/business/createReview/{{ business.id }}" method="post">
+                  {% csrf_token %}
+
+                  <div class="form-group">
+                     <label for="rating">Rating:</label>
+                     <select class="form-control" id="rating" name="rating">
+                        <option>5</option>
+                        <option>4</option>
+                        <option>3</option>
+                        <option>2</option>
+                        <option>1</option>
+                     </select>
+                  </div>
+
+                  <div class="form-group">
+                     <label for="comment">Content:</label>
+                     <textarea name="comment" id="comment" class="form-control" rows="8" cols="80"></textarea>
+                  </div>
+
+                  <button type="sumbit" class="btn btn-danger">Create</button>
+
+               </form>
+            </div>
+            <div class="col-2"></div>
+         </div>
+      </div><br>
+
+
+
+      <footer>
+         <div class="container">
+            <div class="row">
+               <div class="col-sm-1"></div>
+               <div class="col-sm-3">
+                  <p>About</p>
+                  <a href="">About Jelp</a>
+                  <a href="">Careers</a>
+                  <a href="">Press</a>
+                  <a href="">Investor Relations</a>
+                  <a href="">Content Guidelines</a>
+                  <a href="">Terms of service</a>
+                  <a href="">Privacy Policy</a>
+                  <a href="">Ad Choices</a>
+               </div>
+               <div class="col-sm-3">
+                  <p>Discover</p>
+                  <a href="">The Local Jelp</a>
+                  <a href="">Jelp Blog</a>
+                  <a href="">Support</a>
+                  <a href="">Jelp Mobile</a>
+                  <a href="">Developers</a>
+                  <a href="">RSS</a>
+               </div>
+               <div class="col-sm-3">
+                  <p>Jelp for Business Owners</p>
+                  <a href="#">Claim your Business Page</a>
+                  <a href="#">Advertise on Jelp</a>
+                  <a href="#">Jelp Reservations</a>
+                  <a href="#">Jelp Wifi</a>
+                  <a href="#">Jelp Nowait</a>
+                  <a href="#">Business Success Stories</a>
+                  <a href="#">Jelp Blog for Business Owners</a>
+                  <a href="#"></a>
+               </div>
+               <div class="col-sm-2">
+                  <p>Languages</p>
+                  <a href="#">English</a>
+                  <br>
+                  <p>Countries</p>
+                  <a href="#">United States</a>
+               </div>
+            </div><br><hr>
+            <div class="row">
+               <div class="col-12 text-center">
+                  <p class="copyright text-muted">Copyright &copy; Jelp 2018</p>
+               </div>
+            </div>
+         </div>
+      </footer>
    </body>
 </html>
